@@ -72,8 +72,7 @@ TORCH_BATCH = 1024
 MAX_EPOCHS = 30
 EARLY_STOP_PATIENCE = 5
 
-# Random-search spaces (REVIEW-FEEDBACK.md §3.5). Values are lists; a config is one
-# choice per key.
+# Random-search spaces. Values are lists; a configuration picks one choice per key.
 SEARCH_SPACES: dict[str, dict[str, list]] = {
     "rf": {"n_estimators": [100, 200], "max_depth": [10, 20, None], "max_features": ["sqrt", 0.3]},
     "xgb": {"n_estimators": [200, 400], "max_depth": [4, 6, 8], "learning_rate": [0.05, 0.1], "subsample": [0.8, 1.0]},

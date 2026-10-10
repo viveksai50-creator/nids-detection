@@ -3,7 +3,7 @@
 Run:
     python -m src.data.clean
 
-Steps (DATA-SOURCES.md §5): load all CSV/parquet under RAW_DIR, strip column names,
+Steps: load all CSV/parquet under RAW_DIR, strip column names,
 drop identifier columns, coerce features to numeric, drop Inf/NaN rows, drop exact
 duplicates, drop constant columns, map labels to families with the configured
 policies, abort on unmapped labels, write parquet + cleaning_summary.json.

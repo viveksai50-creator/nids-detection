@@ -1,0 +1,79 @@
+{
+  "purpose": "Cached leave-one-attack-family-out split smoke evidence; not model results.",
+  "split_rule": "For each family, remove that family as unseen, then split the remaining known data 60/20/20 into train/validation/test.",
+  "seed": 0,
+  "families": [
+    {
+      "family": "DoS",
+      "seed": 0,
+      "n_train": 920754,
+      "n_val": 306918,
+      "n_test": 306919,
+      "n_unseen": 171634,
+      "train_attack_share": 0.07217780210566557,
+      "seconds": 0.797
+    },
+    {
+      "family": "DDoS",
+      "seed": 0,
+      "n_train": 966648,
+      "n_val": 322216,
+      "n_test": 322217,
+      "n_unseen": 95144,
+      "train_attack_share": 0.11622845130802525,
+      "seconds": 11.715
+    },
+    {
+      "family": "PortScan",
+      "seed": 0,
+      "n_train": 1019049,
+      "n_val": 339683,
+      "n_test": 339683,
+      "n_unseen": 7810,
+      "train_attack_share": 0.16167230427584933,
+      "seconds": 11.51
+    },
+    {
+      "family": "BruteForce",
+      "seed": 0,
+      "n_train": 1019575,
+      "n_val": 339858,
+      "n_test": 339859,
+      "n_unseen": 6933,
+      "train_attack_share": 0.16210479856803078,
+      "seconds": 11.303
+    },
+    {
+      "family": "WebAttack",
+      "seed": 0,
+      "n_train": 1023672,
+      "n_val": 341224,
+      "n_test": 341225,
+      "n_unseen": 104,
+      "train_attack_share": 0.1654592486655882,
+      "seconds": 11.004
+    },
+    {
+      "family": "Botnet",
+      "seed": 0,
+      "n_train": 1023293,
+      "n_val": 341098,
+      "n_test": 341098,
+      "n_unseen": 736,
+      "train_attack_share": 0.16515015738405325,
+      "seconds": 11.402
+    },
+    {
+      "family": "Infiltration",
+      "seed": 0,
+      "n_train": 1023713,
+      "n_val": 341238,
+      "n_test": 341238,
+      "n_unseen": 36,
+      "train_attack_share": 0.16549267226263611,
+      "seconds": 11.711
+    }
+  ],
+  "total_seconds": 69.441,
+  "splits_dir": "$NIDS_DATA_ROOT/splits"
+}
