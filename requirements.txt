@@ -1,0 +1,15 @@
+# Minimum versions known to work together on macOS arm64 with Python 3.12 (as of 2026-09).
+# After first successful install run: pip freeze > requirements.lock.txt  and commit it.
+numpy>=1.26,<3
+pandas>=2.2
+pyarrow>=17
+scikit-learn>=1.5
+xgboost>=2.1
+torch>=2.4
+scipy>=1.14
+scikit-posthocs>=0.9
+matplotlib>=3.9
+psutil>=6.0
+joblib>=1.4
+tqdm>=4.66
+pytest>=8.0

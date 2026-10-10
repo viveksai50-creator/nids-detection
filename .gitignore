@@ -1,0 +1,20 @@
+/data/
+results/raw/
+*.pkl
+*.pt
+*.pth
+__pycache__/
+.venv/
+.ipynb_checkpoints/
+.DS_Store
+
+# Keep local research notes and working documentation out of Git.
+*.md
+!README.md
+notes/*.docx
+results/tuning/*.tmp
+.pytest_cache/
+*.egg-info/
+notebooks/*/*.parquet
+.kaggle/
+kaggle.json
