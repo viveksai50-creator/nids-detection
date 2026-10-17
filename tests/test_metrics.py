@@ -13,6 +13,13 @@ def test_threshold_meets_requested_validation_fpr() -> None:
     assert np.mean(scores >= threshold) <= 0.01
 
 
+def test_threshold_excludes_a_quantile_tie() -> None:
+    scores = np.array([0.0] * 99 + [0.8])
+    threshold = threshold_at_fpr(scores, 0.01)
+    assert np.mean(scores >= threshold) <= 0.01
+    assert threshold > 0.8
+
+
 def test_perfect_scores_have_perfect_unseen_detection() -> None:
     out = compute_run_metrics(
         scores_test=np.array([0.01, 0.02, 0.03, 0.99]),
