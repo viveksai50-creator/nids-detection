@@ -1,0 +1,114 @@
+{
+  "family": "BruteForce",
+  "model": "ae",
+  "objective": "val_pr_auc",
+  "trials": [
+    {
+      "hp": {
+        "bottleneck": 16,
+        "hidden": 64,
+        "dropout": 0.0,
+        "lr": 0.0003
+      },
+      "val_pr_auc": 0.8550580502601436,
+      "seconds": 47.970823209005175
+    },
+    {
+      "hp": {
+        "bottleneck": 8,
+        "hidden": 128,
+        "dropout": 0.1,
+        "lr": 0.001
+      },
+      "val_pr_auc": 0.8452421344559858,
+      "seconds": 46.21055041698855
+    },
+    {
+      "hp": {
+        "bottleneck": 16,
+        "hidden": 64,
+        "dropout": 0.1,
+        "lr": 0.001
+      },
+      "val_pr_auc": 0.7629230392116071,
+      "seconds": 48.500438084010966
+    },
+    {
+      "hp": {
+        "bottleneck": 16,
+        "hidden": 64,
+        "dropout": 0.0,
+        "lr": 0.001
+      },
+      "val_pr_auc": 0.8951844473505814,
+      "seconds": 42.53458870800387
+    },
+    {
+      "hp": {
+        "bottleneck": 16,
+        "hidden": 128,
+        "dropout": 0.0,
+        "lr": 0.001
+      },
+      "val_pr_auc": 0.8517784791728469,
+      "seconds": 27.881873166988953
+    },
+    {
+      "hp": {
+        "bottleneck": 8,
+        "hidden": 64,
+        "dropout": 0.0,
+        "lr": 0.0003
+      },
+      "val_pr_auc": 0.8198669867152388,
+      "seconds": 46.80682374999742
+    },
+    {
+      "hp": {
+        "bottleneck": 8,
+        "hidden": 64,
+        "dropout": 0.1,
+        "lr": 0.0003
+      },
+      "val_pr_auc": 0.7963422136857731,
+      "seconds": 48.08884333301103
+    },
+    {
+      "hp": {
+        "bottleneck": 8,
+        "hidden": 128,
+        "dropout": 0.0,
+        "lr": 0.001
+      },
+      "val_pr_auc": 0.8367393453785198,
+      "seconds": 27.743642708999687
+    },
+    {
+      "hp": {
+        "bottleneck": 16,
+        "hidden": 128,
+        "dropout": 0.0,
+        "lr": 0.0003
+      },
+      "val_pr_auc": 0.8482102228467382,
+      "seconds": 44.38021466600185
+    },
+    {
+      "hp": {
+        "bottleneck": 8,
+        "hidden": 64,
+        "dropout": 0.1,
+        "lr": 0.001
+      },
+      "val_pr_auc": 0.8068649436561275,
+      "seconds": 48.1308371250052
+    }
+  ],
+  "best_hp": {
+    "bottleneck": 16,
+    "hidden": 64,
+    "dropout": 0.0,
+    "lr": 0.001
+  },
+  "complete": true
+}

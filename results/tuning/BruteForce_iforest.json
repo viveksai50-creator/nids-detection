@@ -1,0 +1,84 @@
+{
+  "family": "BruteForce",
+  "model": "iforest",
+  "objective": "val_pr_auc",
+  "trials": [
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 256,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.47123128824115024,
+      "seconds": 13.291800708000665
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 1024,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.635388613887714,
+      "seconds": 12.433894917001453
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 1024,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.6391340205786562,
+      "seconds": 1.7057270829973277
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 256,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.5618721033064622,
+      "seconds": 1.4704146250005579
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 256,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.5997592594262801,
+      "seconds": 0.7714512079983251
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 1024,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.6347319394807989,
+      "seconds": 0.8605807499989169
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 256,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.4658196616080597,
+      "seconds": 24.316913999999088
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 1024,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.6001094587422169,
+      "seconds": 25.97766587499791
+    }
+  ],
+  "best_hp": {
+    "n_estimators": 200,
+    "max_samples": 1024,
+    "max_features": 1.0
+  }
+}

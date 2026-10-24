@@ -1,0 +1,102 @@
+{
+  "family": "WebAttack",
+  "model": "rf",
+  "objective": "val_pr_auc",
+  "trials": [
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_depth": null,
+        "max_features": 0.3
+      },
+      "val_pr_auc": 0.9999515955684624,
+      "seconds": 267.4405632079979
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_depth": null,
+        "max_features": "sqrt"
+      },
+      "val_pr_auc": 0.9999841674521752,
+      "seconds": 92.43819741699917
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_depth": 10,
+        "max_features": 0.3
+      },
+      "val_pr_auc": 0.9999177438267218,
+      "seconds": 86.59643958400193
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_depth": null,
+        "max_features": "sqrt"
+      },
+      "val_pr_auc": 0.9999841676990856,
+      "seconds": 46.26006737500211
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_depth": 20,
+        "max_features": "sqrt"
+      },
+      "val_pr_auc": 0.9999844014767869,
+      "seconds": 45.59907891600233
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_depth": 20,
+        "max_features": "sqrt"
+      },
+      "val_pr_auc": 0.9999846911869409,
+      "seconds": 90.37956954200126
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_depth": 20,
+        "max_features": 0.3
+      },
+      "val_pr_auc": 0.9999532502813671,
+      "seconds": 126.39362762499877
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_depth": 10,
+        "max_features": "sqrt"
+      },
+      "val_pr_auc": 0.999973039961617,
+      "seconds": 34.535976208997454
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_depth": null,
+        "max_features": 0.3
+      },
+      "val_pr_auc": 0.9999510624477388,
+      "seconds": 132.87971920899872
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_depth": 10,
+        "max_features": 0.3
+      },
+      "val_pr_auc": 0.9999222227485144,
+      "seconds": 170.26416208400042
+    }
+  ],
+  "best_hp": {
+    "n_estimators": 200,
+    "max_depth": 20,
+    "max_features": "sqrt"
+  }
+}

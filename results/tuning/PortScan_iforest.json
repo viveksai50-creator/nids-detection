@@ -1,0 +1,84 @@
+{
+  "family": "PortScan",
+  "model": "iforest",
+  "objective": "val_pr_auc",
+  "trials": [
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 256,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.497104014975062,
+      "seconds": 13.078033416997641
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 1024,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.6467351446490148,
+      "seconds": 1.7540106659980665
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 1024,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.6577530526409091,
+      "seconds": 0.8826972919996479
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 1024,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.5892282365278586,
+      "seconds": 24.94510212499881
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 256,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.4988458619414059,
+      "seconds": 24.88290733300164
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 256,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.6042946150141907,
+      "seconds": 0.7919449170003645
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 1024,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.5804839819418127,
+      "seconds": 12.49527400000079
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 256,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.5678948235264731,
+      "seconds": 1.5057158749987138
+    }
+  ],
+  "best_hp": {
+    "n_estimators": 100,
+    "max_samples": 1024,
+    "max_features": 1.0
+  }
+}

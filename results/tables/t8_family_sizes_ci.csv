@@ -1,0 +1,8 @@
+family,n_unseen,mean_udr_ci_width
+Botnet,736,0.0342
+BruteForce,6933,0.0076
+DDoS,95144,0.0025
+DoS,171634,0.0027
+Infiltration,36,0.248
+PortScan,7810,0.015
+WebAttack,104,0.1474

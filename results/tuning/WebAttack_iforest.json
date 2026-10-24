@@ -1,0 +1,84 @@
+{
+  "family": "WebAttack",
+  "model": "iforest",
+  "objective": "val_pr_auc",
+  "trials": [
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 256,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.5073110276289975,
+      "seconds": 12.580950416999258
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 256,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.5620499049701336,
+      "seconds": 1.4965642079987447
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 1024,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.5744830196037058,
+      "seconds": 11.766987249997328
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 1024,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.5827551948285776,
+      "seconds": 23.678771374998178
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 256,
+        "max_features": 0.5
+      },
+      "val_pr_auc": 0.5195163060541135,
+      "seconds": 23.69055712499903
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_samples": 1024,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.6356630609766784,
+      "seconds": 1.702502000000095
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 256,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.5950475416698671,
+      "seconds": 0.7636010000023816
+    },
+    {
+      "hp": {
+        "n_estimators": 100,
+        "max_samples": 1024,
+        "max_features": 1.0
+      },
+      "val_pr_auc": 0.6476815345883976,
+      "seconds": 0.8832186250001541
+    }
+  ],
+  "best_hp": {
+    "n_estimators": 100,
+    "max_samples": 1024,
+    "max_features": 1.0
+  }
+}

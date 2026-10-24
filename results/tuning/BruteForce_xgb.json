@@ -1,0 +1,113 @@
+{
+  "family": "BruteForce",
+  "model": "xgb",
+  "objective": "val_pr_auc",
+  "trials": [
+    {
+      "hp": {
+        "n_estimators": 400,
+        "max_depth": 8,
+        "learning_rate": 0.1,
+        "subsample": 0.8
+      },
+      "val_pr_auc": 0.9999960067149889,
+      "seconds": 47.67726145800043
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_depth": 4,
+        "learning_rate": 0.1,
+        "subsample": 1.0
+      },
+      "val_pr_auc": 0.99998888467782,
+      "seconds": 18.727525291000347
+    },
+    {
+      "hp": {
+        "n_estimators": 400,
+        "max_depth": 4,
+        "learning_rate": 0.1,
+        "subsample": 0.8
+      },
+      "val_pr_auc": 0.9999907781011841,
+      "seconds": 35.1506317079984
+    },
+    {
+      "hp": {
+        "n_estimators": 400,
+        "max_depth": 6,
+        "learning_rate": 0.1,
+        "subsample": 0.8
+      },
+      "val_pr_auc": 0.9999969908605829,
+      "seconds": 42.9640552919991
+    },
+    {
+      "hp": {
+        "n_estimators": 400,
+        "max_depth": 6,
+        "learning_rate": 0.1,
+        "subsample": 1.0
+      },
+      "val_pr_auc": 0.9999976754448786,
+      "seconds": 38.54344770800162
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_depth": 6,
+        "learning_rate": 0.05,
+        "subsample": 1.0
+      },
+      "val_pr_auc": 0.9999882813844377,
+      "seconds": 20.898522084000433
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_depth": 8,
+        "learning_rate": 0.05,
+        "subsample": 1.0
+      },
+      "val_pr_auc": 0.9999827912075037,
+      "seconds": 22.63072991700028
+    },
+    {
+      "hp": {
+        "n_estimators": 200,
+        "max_depth": 4,
+        "learning_rate": 0.05,
+        "subsample": 1.0
+      },
+      "val_pr_auc": 0.9999647466765782,
+      "seconds": 19.062832915999024
+    },
+    {
+      "hp": {
+        "n_estimators": 400,
+        "max_depth": 8,
+        "learning_rate": 0.1,
+        "subsample": 1.0
+      },
+      "val_pr_auc": 0.9999926926699654,
+      "seconds": 45.54497233300208
+    },
+    {
+      "hp": {
+        "n_estimators": 400,
+        "max_depth": 4,
+        "learning_rate": 0.1,
+        "subsample": 1.0
+      },
+      "val_pr_auc": 0.9999929997036466,
+      "seconds": 32.751108915999794
+    }
+  ],
+  "best_hp": {
+    "n_estimators": 400,
+    "max_depth": 6,
+    "learning_rate": 0.1,
+    "subsample": 1.0
+  }
+}
