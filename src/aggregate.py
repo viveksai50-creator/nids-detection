@@ -70,7 +70,9 @@ def load_long() -> pd.DataFrame:
 def mean_std_matrix(df: pd.DataFrame, col: str) -> pd.DataFrame:
     g = df.groupby(["family", "model"])[col]
     mean, std = g.mean().unstack("model"), g.std().unstack("model")
-    return mean.round(4).astype(str) + " ± " + std.round(4).fillna(0).astype(str)
+    result = mean.round(4).astype(str) + " ± " + std.round(4).astype(str)
+    count = g.count().unstack("model")
+    return result.where(count > 1, mean.round(4).astype(str) + " (n=1)").where(count > 0, "—")
 
 
 def to_markdown(df: pd.DataFrame, title: str) -> str:

@@ -19,6 +19,7 @@ SPLITS_DIR = DATA_ROOT / "splits"
 RESULTS_DIR = PROJECT_ROOT / "results"
 RAW_RESULTS_DIR = RESULTS_DIR / "raw"
 TUNING_DIR = RESULTS_DIR / "tuning"
+CHECKPOINT_DIR = RESULTS_DIR / "checkpoints"
 TABLES_DIR = RESULTS_DIR / "tables"
 FIGURES_DIR = RESULTS_DIR / "figures"
 STATS_DIR = RESULTS_DIR / "stats"
@@ -79,7 +80,7 @@ SEARCH_SPACES: dict[str, dict[str, list]] = {
     "iforest": {"n_estimators": [100, 200], "max_samples": [256, 1024], "max_features": [0.5, 1.0]},
     "ocsvm": {"nu": [0.01, 0.05], "gamma": ["scale", 0.01, 0.1]},
     "ae": {"bottleneck": [8, 16], "hidden": [64, 128], "dropout": [0.0, 0.1], "lr": [1e-3, 3e-4]},
-    "vae": {"latent": [8, 16], "hidden": [64, 128], "beta": [0.5, 1.0], "lr": [1e-3, 1e-3]},
+    "vae": {"latent": [8, 16], "hidden": [64, 128], "beta": [0.5, 1.0], "lr": [1e-3, 3e-4]},
     "scarf": {"corruption_rate": [0.3, 0.6], "temperature": [0.1, 0.5, 1.0]},
 }
 
@@ -149,5 +150,5 @@ def get_device():
 
 
 def ensure_dirs() -> None:
-    for d in (RAW_DIR, PROCESSED_DIR, SPLITS_DIR, RAW_RESULTS_DIR, TUNING_DIR, TABLES_DIR, FIGURES_DIR, STATS_DIR):
+    for d in (RAW_DIR, PROCESSED_DIR, SPLITS_DIR, RAW_RESULTS_DIR, TUNING_DIR, CHECKPOINT_DIR, TABLES_DIR, FIGURES_DIR, STATS_DIR):
         d.mkdir(parents=True, exist_ok=True)
