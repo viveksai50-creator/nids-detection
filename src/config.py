@@ -95,6 +95,15 @@ DEFAULT_HP: dict[str, dict] = {
     "scarf": {"corruption_rate": 0.6, "temperature": 0.5, "hidden": 256, "embed_dim": 128, "proj_dim": 64, "lr": 1e-3, "k": SCARF_KNN_K},
 }
 
+
+def tuning_trials_for(model: str) -> int:
+    """Return the number of distinct configurations permitted for a model."""
+    space = SEARCH_SPACES[model]
+    combinations = 1
+    for values in space.values():
+        combinations *= len(values)
+    return min(TUNING_TRIALS, combinations)
+
 # ----------------------------------------------------------------------------- label mapping
 def strip_attempted(label: str) -> str:
     s = str(label)

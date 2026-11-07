@@ -28,7 +28,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
-from sklearn.metrics import roc_auc_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import average_precision_score, roc_auc_score
 
 from src import config as C
 from src.data.split import Split, build_split
@@ -75,7 +76,7 @@ def tune(family: str, model_name: str) -> dict:
         if cached.get("complete", "best_hp" in cached):
             return cached["best_hp"]
     split = build_split(family, C.TUNING_SEED)
-    configs = sample_configs(C.SEARCH_SPACES[model_name], C.TUNING_TRIALS, seed=zlib.crc32(f"{family}_{model_name}".encode()) & 0xFFFF)
+    configs = sample_configs(C.SEARCH_SPACES[model_name], C.tuning_trials_for(model_name), seed=zlib.crc32(f"{family}_{model_name}".encode()) & 0xFFFF)
     trials = cached.get("trials", []) if path.exists() else []
     completed = {hp_id(t["hp"]) for t in trials}
     for hp in configs:
@@ -84,7 +85,7 @@ def tune(family: str, model_name: str) -> dict:
         t0 = time.perf_counter()
         m = build_model(model_name, C.TUNING_SEED, hp)
         checkpoint_path = None
-        if model_name in ("ae", "vae"):
+        if model_name in ("ae", "vae", "scarf"):
             checkpoint_path = C.CHECKPOINT_DIR / f"tuning_{family}_{model_name}_{hp_id(hp)}.pt"
             m.configure_checkpoint(checkpoint_path, {
                 "family": family, "model": model_name, "seed": C.TUNING_SEED, "hp": hp,
@@ -125,7 +126,7 @@ def run_one(family: str, model_name: str, seed: int, hp: dict, measure_latency: 
     split: Split = build_split(family, seed)
     model = build_model(model_name, seed, hp)
     checkpoint_path = None
-    if model_name in ("ae", "vae"):
+    if model_name in ("ae", "vae", "scarf"):
         checkpoint_path = C.CHECKPOINT_DIR / f"{family}_{model_name}_seed{seed}.pt"
         model.configure_checkpoint(checkpoint_path, {
             "family": family, "model": model_name, "seed": seed, "hp": hp,
@@ -135,11 +136,15 @@ def run_one(family: str, model_name: str, seed: int, hp: dict, measure_latency: 
     with PeakMemorySampler() as mem, Timer() as t_fit:
         model.fit(split.X_train, split.y_train, split.X_val, split.y_val)
     scores_val = model.score(split.X_val)
+    if not np.isfinite(scores_val).all():
+        raise FloatingPointError("non-finite validation scores")
     benign_val_scores = scores_val[split.y_val == 0]
     thresholds = thresholds_for(benign_val_scores, C.TARGET_FPRS)
     with Timer() as t_score:
         scores_test = model.score(split.X_test)
         scores_unseen = model.score(split.X_unseen)
+    if not np.isfinite(scores_test).all() or not np.isfinite(scores_unseen).all():
+        raise FloatingPointError("non-finite final scores")
     metrics = compute_run_metrics(scores_test, split.y_test, scores_unseen, thresholds, f"{C.PRIMARY_FPR:g}")
     latency = {}
     if measure_latency:
@@ -167,6 +172,49 @@ def run_one(family: str, model_name: str, seed: int, hp: dict, measure_latency: 
     return result
 
 
+def run_scarf_sanity(family: str, seed: int, hp: dict) -> dict:
+    """Train and assess SCARF using only TRAIN and validation data.
+
+    This deliberately does not read or score the known-test or held-out arrays.
+    It is a development diagnostic, never a canonical benchmark record.
+    """
+    split: Split = build_split(family, seed)
+    model = build_model("scarf", seed, hp)
+    checkpoint_path = C.CHECKPOINT_DIR / f"sanity_{family}_scarf_seed{seed}.pt"
+    model.configure_checkpoint(checkpoint_path, {
+        "family": family, "model": "scarf", "seed": seed, "hp": hp,
+        "purpose": "sanity", "n_train": split.meta["n_train"],
+        "n_val": split.meta["n_val"], "n_features": len(split.feature_names),
+    })
+    with PeakMemorySampler() as mem, Timer() as t_fit:
+        model.fit(split.X_train, split.y_train, split.X_val, split.y_val)
+    train_embeddings = model.embed(split.X_train)
+    val_embeddings = model.embed(split.X_val)
+    probe = LogisticRegression(random_state=seed, max_iter=1000, class_weight="balanced")
+    probe.fit(train_embeddings, split.y_train)
+    probe_scores = probe.predict_proba(val_embeddings)[:, 1]
+    knn_scores = model.score(split.X_val)
+    if not np.isfinite(probe_scores).all() or not np.isfinite(knn_scores).all():
+        raise FloatingPointError("non-finite SCARF sanity validation scores")
+    return {
+        "kind": "diagnostic_sanity", "family": family, "model": "scarf", "seed": seed,
+        "hp": hp, "device": str(model.dev), "git": git_hash(),
+        "timestamp": datetime.now(timezone.utc).isoformat(), "split": {
+            "n_train": split.meta["n_train"], "n_val": split.meta["n_val"],
+            "n_features": len(split.feature_names),
+        },
+        "train_seconds": t_fit.seconds, "peak_rss_mb": mem.peak_rss_mb,
+        "history": model.history,
+        "validation": {
+            "linear_probe_roc_auc": float(roc_auc_score(split.y_val, probe_scores)),
+            "knn_roc_auc": float(roc_auc_score(split.y_val, knn_scores)),
+            "knn_pr_auc": float(average_precision_score(split.y_val, knn_scores)),
+        },
+        "checkpoint_path": str(checkpoint_path),
+        "scope": "TRAIN and validation only; known-test and held-out data were not scored",
+    }
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--families", nargs="*", default=C.FAMILIES)
@@ -178,6 +226,8 @@ def main(argv=None) -> int:
     p.add_argument("--output-dir", type=Path, default=C.RAW_RESULTS_DIR,
                    help="directory for result JSONs (use a non-root subdirectory for diagnostic runs)")
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--scarf-sanity", action="store_true",
+                   help="run one TRAIN/validation-only SCARF diagnostic and exit")
     a = p.parse_args(argv)
 
     models = a.models or (C.TIER_A_MODELS if a.tier == "A" else C.TIER_B_MODELS if a.tier == "B" else C.TIER_A_MODELS)
@@ -190,7 +240,18 @@ def main(argv=None) -> int:
         for f, m, s in plan:
             print(f"  {f:14s} {m:8s} seed={s}")
         return 0
-
+    if a.scarf_sanity:
+        if len(a.families) != 1 or len(seeds) != 1 or (a.models not in (None, ["scarf"])):
+            p.error("--scarf-sanity requires one family, one seed, and only SCARF")
+        output = C.RESULTS_DIR / "diagnostics" / f"{a.families[0]}_scarf_validation_sanity_seed{seeds[0]}.json"
+        result = run_scarf_sanity(a.families[0], seeds[0], C.DEFAULT_HP["scarf"])
+        write_json_atomically(output, result)
+        checkpoint = Path(result["checkpoint_path"])
+        checkpoint.unlink(missing_ok=True)
+        validation = result["validation"]
+        print(f"sanity saved {output}; probe AUC={validation['linear_probe_roc_auc']:.4f} "
+              f"kNN AUC={validation['knn_roc_auc']:.4f} PR-AUC={validation['knn_pr_auc']:.4f}")
+        return 0
     for f, m, s in plan:
         out = a.output_dir / f"{f}_{m}_seed{s}.json"
         if out.exists():

@@ -6,13 +6,14 @@ import torch
 from src.models import build_model
 
 
-@pytest.mark.parametrize("name", ["ae", "vae"])
+@pytest.mark.parametrize("name", ["ae", "vae", "scarf"])
 def test_interrupted_fit_matches_uninterrupted_cpu(name, tmp_path, monkeypatch):
     monkeypatch.setenv("NIDS_DEVICE", "cpu")
     rng = np.random.default_rng(4)
     X = rng.normal(size=(72, 6)).astype(np.float32)
     y = np.r_[np.zeros(60, dtype=np.int8), np.ones(12, dtype=np.int8)]
-    hp = {"hidden": 8, "bottleneck": 2, "latent": 2, "dropout": 0.1, "epochs": 4}
+    hp = {"hidden": 8, "bottleneck": 2, "latent": 2, "embed_dim": 4,
+          "proj_dim": 3, "dropout": 0.1, "epochs": 4}
     reference = build_model(name, 7, hp)
     reference.fit(X, y, X, y)
     path = tmp_path / "fit.pt"
